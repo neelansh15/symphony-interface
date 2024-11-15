@@ -10,9 +10,13 @@ import { useCurrentWorkflow } from "@/hooks/useCurrentWorkflow";
 import { title } from "@/components/primitives";
 import { Input } from "@nextui-org/input";
 import { useCallback } from "react";
+import { useDisclosure } from "@nextui-org/modal";
+import { Card, CardBody } from "@nextui-org/card";
 
 export default function CreatePage() {
   const { wf, setWf, addBlock } = useCurrentWorkflow();
+
+  const { isOpen, onOpen } = useDisclosure();
 
   const handleNameChange = useCallback(
     (value: string) => {
@@ -25,10 +29,31 @@ export default function CreatePage() {
     console.log("Creating workflow", wf);
   }, [wf]);
 
+  const handleAddBlock = useCallback(() => {
+    addBlock("create-token");
+  }, [addBlock]);
+
+  const handleRemoveBlock = useCallback(
+    (index: number) => () => {
+      setWf((currentVal) => {
+        const blocks = currentVal?.blocks ? [...currentVal.blocks] : [];
+        blocks.splice(index, 1);
+
+        return {
+          ...currentVal,
+          blocks,
+        };
+      });
+    },
+    [setWf],
+  );
+
   return (
     <DefaultLayout>
       <section>
-        <h1 className="text-secondary uppercase font-semibold text-sm">Workflow</h1>
+        <h1 className="text-secondary uppercase font-semibold text-sm">
+          Workflow
+        </h1>
 
         <div className="mt-6">
           <Input
@@ -43,27 +68,37 @@ export default function CreatePage() {
           />
         </div>
 
-        <div className="workflow-background mt-5 min-h-[60vh] p-6 bg-gray-100 rounded-xl border border-gray-200 flex flex-col items-center">
-          {wf &&
-            wf.blocks &&
-            wf.blocks.map((block) => (
-              <>
-                <BlockCard id={block.id} className="mt-5" />
-              </>
-            ))}
+        <div className="workflow-background mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1">
+          {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
+            <Card
+              className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
+              fullWidth
+            >
+              <CardBody className="flex justify-center items-center ">
+                No blocks added yet. Start by adding one below.
+              </CardBody>
+            </Card>
+          )}
 
-          <Button
-            className="mt-3 max-w-xl"
-            fullWidth
-            onClick={() => addBlock(Math.random().toString())}
-          >
+          {wf?.blocks?.map((block, i) => (
+            <BlockCard
+              key={block.id + i}
+              blockId={block.id}
+              className="mt-5"
+              onDismiss={handleRemoveBlock(i)}
+            />
+          ))}
+
+          <Button className="mt-5 max-w-xl" fullWidth onClick={handleAddBlock}>
             <PlusIcon width={18} />
             Add Block
           </Button>
         </div>
 
         <div className="mt-5">
-          <Button color="primary" onClick={handleCreate}>Create</Button>
+          <Button color="primary" onClick={handleCreate}>
+            Create
+          </Button>
         </div>
       </section>
     </DefaultLayout>

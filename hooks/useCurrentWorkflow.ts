@@ -1,8 +1,9 @@
+import { getBlockById } from "@/utils";
 import { atom, useAtom } from "jotai";
 import { useCallback } from "react";
 
 const currentWorkflowAtom = atom<Workflow | undefined>({
-  name: "Workflow Name"
+  name: "Workflow Name",
 });
 
 export const useCurrentWorkflow = () => {
@@ -12,7 +13,8 @@ export const useCurrentWorkflow = () => {
     (id: string) => {
       const blocks = wf?.blocks || [];
 
-      blocks.push({ id });
+      const block = getBlockById(id);
+      blocks.push(block);
 
       setWf({ ...wf, blocks });
     },

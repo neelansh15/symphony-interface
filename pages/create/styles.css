@@ -1,5 +1,5 @@
 .workflow-background {
-    background-image: radial-gradient(circle at 1px 1px, #ddd 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--nextui-content4)) 1px, transparent 0);
     background-size: 10px 10px;
     background-repeat: repeat;
 }
