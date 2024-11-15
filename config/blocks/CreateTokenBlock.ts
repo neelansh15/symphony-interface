@@ -1,6 +1,7 @@
 const createTokenBlock: Block = {
   id: "create-token",
   name: "Create ERC-20 Token",
+  description: "Create a new ERC-20 token",
   params: [
     {
       name: "name",

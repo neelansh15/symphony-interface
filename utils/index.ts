@@ -7,3 +7,7 @@ export function getBlockById(id: string): Block {
   }
   return block;
 }
+
+export function firstLetterToUpperCase(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-sort-props */
-import { PlusIcon } from "lucide-react";
+import { ArrowDownIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@nextui-org/button";
 import { BlockCard } from "@/components/blocks/BlockCard";
@@ -9,14 +9,23 @@ import { useCurrentWorkflow } from "@/hooks/useCurrentWorkflow";
 
 import { title } from "@/components/primitives";
 import { Input } from "@nextui-org/input";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDisclosure } from "@nextui-org/modal";
 import { Card, CardBody } from "@nextui-org/card";
+import { AddBlockModal } from "@/components/blocks/AddBlockModal";
+import { EditBlockModal } from "@/components/blocks/EditBlockModal";
 
 export default function CreatePage() {
   const { wf, setWf, addBlock } = useCurrentWorkflow();
 
-  const { isOpen, onOpen } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onOpenChange: onEditOpenChange,
+  } = useDisclosure();
+
+  const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
 
   const handleNameChange = useCallback(
     (value: string) => {
@@ -29,9 +38,12 @@ export default function CreatePage() {
     console.log("Creating workflow", wf);
   }, [wf]);
 
-  const handleAddBlock = useCallback(() => {
-    addBlock("create-token");
-  }, [addBlock]);
+  const handleAddBlock = useCallback(
+    (blockId: string) => {
+      addBlock(blockId);
+    },
+    [addBlock],
+  );
 
   const handleRemoveBlock = useCallback(
     (index: number) => () => {
@@ -49,58 +61,90 @@ export default function CreatePage() {
   );
 
   return (
-    <DefaultLayout>
-      <section>
-        <h1 className="text-secondary uppercase font-semibold text-sm">
-          Workflow
-        </h1>
+    <>
+      <DefaultLayout>
+        <section>
+          <h1 className="text-secondary uppercase font-semibold text-sm">
+            Workflow
+          </h1>
 
-        <div className="mt-6">
-          <Input
-            type="text"
-            variant="underlined"
-            onChange={(e) => handleNameChange(e.target.value)}
-            value={wf?.name}
-            classNames={{
-              inputWrapper: "max-w-max",
-              input: "text-4xl font-bold",
-            }}
-          />
-        </div>
-
-        <div className="workflow-background mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1">
-          {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
-            <Card
-              className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
-              fullWidth
-            >
-              <CardBody className="flex justify-center items-center ">
-                No blocks added yet. Start by adding one below.
-              </CardBody>
-            </Card>
-          )}
-
-          {wf?.blocks?.map((block, i) => (
-            <BlockCard
-              key={block.id + i}
-              blockId={block.id}
-              className="mt-5"
-              onDismiss={handleRemoveBlock(i)}
+          <div className="mt-6">
+            <Input
+              type="text"
+              variant="underlined"
+              onChange={(e) => handleNameChange(e.target.value)}
+              value={wf?.name}
+              classNames={{
+                inputWrapper: "max-w-max",
+                input: "text-4xl font-bold",
+              }}
             />
-          ))}
+          </div>
 
-          <Button className="mt-5 max-w-xl" fullWidth onClick={handleAddBlock}>
-            <PlusIcon width={18} />
-            Add Block
-          </Button>
-        </div>
+          <div className="workflow-background mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1">
+            {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
+              <Card
+                className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
+                fullWidth
+              >
+                <CardBody className="flex justify-center items-center ">
+                  No blocks added yet. Start by adding one below.
+                </CardBody>
+              </Card>
+            )}
 
-        <div className="mt-5">
-          <Button color="primary" onClick={handleCreate}>
-            Create
-          </Button>
-        </div>
-      </section>
-    </DefaultLayout>
+            {wf?.blocks?.map((block, i) => (
+              <>
+                <BlockCard
+                  key={block.id + i}
+                  blockId={block.id}
+                  className="mt-5"
+                  onDismiss={handleRemoveBlock(i)}
+                  onEditClick={() => {
+                    setSelectedBlock(block.id);
+                    onEditOpen();
+                  }}
+                />
+                {wf.blocks && i < wf.blocks.length - 1 && (
+                  <ArrowDownIcon className="mt-5" size={24} />
+                )}
+              </>
+            ))}
+
+            <Button
+              className="mt-5 max-w-xl border-2 border-dashed min-h-16 backdrop-blur"
+              variant="ghost"
+              fullWidth
+              onClick={onOpen}
+            >
+              <PlusIcon width={18} />
+              Add Block
+            </Button>
+          </div>
+
+          <div className="mt-5">
+            <Button color="primary" onClick={handleCreate}>
+              Create
+            </Button>
+          </div>
+        </section>
+      </DefaultLayout>
+      <AddBlockModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onAddBlock={(blockId) => {
+          handleAddBlock(blockId);
+          setSelectedBlock(blockId);
+          onEditOpen();
+        }}
+      />
+      {selectedBlock && (
+        <EditBlockModal
+          blockId={selectedBlock}
+          isOpen={isEditOpen}
+          onOpenChange={onEditOpenChange}
+        />
+      )}
+    </>
   );
 }
