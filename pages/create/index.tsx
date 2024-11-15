@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-sort-props */
 import { ArrowDownIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@nextui-org/button";
@@ -7,15 +6,17 @@ import DefaultLayout from "@/layouts/default";
 import "./styles.css";
 import { useCurrentWorkflow } from "@/hooks/useCurrentWorkflow";
 
-import { title } from "@/components/primitives";
 import { Input } from "@nextui-org/input";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@nextui-org/modal";
 import { Card, CardBody } from "@nextui-org/card";
 import { AddBlockModal } from "@/components/blocks/AddBlockModal";
 import { EditBlockModal } from "@/components/blocks/EditBlockModal";
+import autoAnimate from "@formkit/auto-animate";
 
 export default function CreatePage() {
+  const parent = useRef(null);
+
   const { wf, setWf, addBlock } = useCurrentWorkflow();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -60,6 +61,10 @@ export default function CreatePage() {
     [setWf],
   );
 
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
+
   return (
     <>
       <DefaultLayout>
@@ -82,34 +87,36 @@ export default function CreatePage() {
           </div>
 
           <div className="workflow-background mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1">
-            {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
-              <Card
-                className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
-                fullWidth
-              >
-                <CardBody className="flex justify-center items-center ">
-                  No blocks added yet. Start by adding one below.
-                </CardBody>
-              </Card>
-            )}
-
-            {wf?.blocks?.map((block, i) => (
-              <>
-                <BlockCard
-                  key={block.id + i}
-                  blockId={block.id}
-                  className="mt-5"
-                  onDismiss={handleRemoveBlock(i)}
-                  onEditClick={() => {
-                    setSelectedBlock(block.id);
-                    onEditOpen();
-                  }}
-                />
-                {wf.blocks && i < wf.blocks.length - 1 && (
-                  <ArrowDownIcon className="mt-5" size={24} />
-                )}
-              </>
-            ))}
+            <div ref={parent}>
+              {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
+                <Card
+                  className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
+                  fullWidth
+                >
+                  <CardBody className="flex justify-center items-center ">
+                    No blocks added yet. Start by adding one below.
+                  </CardBody>
+                </Card>
+              )}
+              {wf?.blocks?.map((block, i) => (
+                <>
+                  <BlockCard
+                    key={block.id + i}
+                    blockId={block.id}
+                    // w-screen here due to some weird behaviour when using autoanimate
+                    className="mt-5 w-screen"
+                    onDismiss={handleRemoveBlock(i)}
+                    onEditClick={() => {
+                      setSelectedBlock(block.id);
+                      onEditOpen();
+                    }}
+                  />
+                  {wf.blocks && i < wf.blocks.length - 1 && (
+                    <ArrowDownIcon className="mt-5" size={24} />
+                  )}
+                </>
+              ))}
+            </div>
 
             <Button
               className="mt-5 max-w-xl border-2 border-dashed min-h-16 backdrop-blur"

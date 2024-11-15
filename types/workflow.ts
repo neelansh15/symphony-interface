@@ -1,11 +1,15 @@
 interface Field {
   name: string;
-  type: "string" | "number" | "boolean" | "object" | "array";
+  type: "string" | "number";
+}
+
+interface Param extends Field {
+  value?: string | number;
 }
 
 interface Block {
   id: string;
-  params: Field[];
+  params: Param[];
 
   name?: string;
   description?: string;
