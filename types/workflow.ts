@@ -5,5 +5,5 @@ interface Block {
 interface Workflow {
   name?: string;
   startTimestamp?: number;
-  blocks: Block[];
+  blocks?: Block[];
 }
