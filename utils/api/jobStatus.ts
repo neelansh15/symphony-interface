@@ -11,8 +11,9 @@ export const createJob = async (
     });
   } catch (error) {
     console.error("Error creating job", error);
+    throw error;
   }
-  return [{} as JobStatusSchema];
+  // return [{} as JobStatusSchema];
 };
 
 export const getJobById = async (id: string): Promise<JobStatusSchema[]> => {

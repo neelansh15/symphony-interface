@@ -51,6 +51,7 @@ export default function WorkflowsPage() {
       setIsSubmittingJob((prev) => ({ ...prev, [id]: true }));
       await createJob({
         flow_id: Number(id),
+        status: "SUBMITTED"
       });
       setIsSubmittingJob((prev) => ({ ...prev, [id]: false }));
 
@@ -121,6 +122,7 @@ export default function WorkflowsPage() {
           <TableHeader>
             <TableColumn>JOB ID</TableColumn>
             <TableColumn>WORKFLOW ID</TableColumn>
+            <TableColumn>DATETIME</TableColumn>
             <TableColumn>STATUS</TableColumn>
           </TableHeader>
           <TableBody>
@@ -129,6 +131,7 @@ export default function WorkflowsPage() {
                 <TableRow key={job.id}>
                   <TableCell>{job.id}</TableCell>
                   <TableCell>{job.flow_id}</TableCell>
+                  <TableCell>{job.created_at || "-"}</TableCell>
                   <TableCell>{job.status}</TableCell>
                 </TableRow>
               ))
@@ -139,6 +142,7 @@ export default function WorkflowsPage() {
                     ? "Loading workflow jobs..."
                     : "No workflow jobs found"}
                 </TableCell>
+                <TableCell> </TableCell>
                 <TableCell> </TableCell>
                 <TableCell> </TableCell>
               </TableRow>
