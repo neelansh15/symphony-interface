@@ -3,12 +3,16 @@ import DefaultLayout from "@/layouts/default";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BlockSchema, InputSchema, OutputSchema } from "@/types/apiTypes";
 import { createBlock } from "@/utils/api/block";
 import { toast } from "sonner";
+import autoAnimate from "@formkit/auto-animate";
 
 export default function RegisterBlocksPage() {
+  const parent0 = useRef(null);
+  const parent1 = useRef(null);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -94,6 +98,14 @@ export default function RegisterBlocksPage() {
     }
   };
 
+  useEffect(() => {
+    parent0.current && autoAnimate(parent0.current);
+  }, [parent0]);
+
+  useEffect(() => {
+    parent1.current && autoAnimate(parent1.current);
+  }, [parent1]);
+
   return (
     <DefaultLayout>
       <main className="md:grid place-items-center">
@@ -142,79 +154,88 @@ export default function RegisterBlocksPage() {
 
           <section className="mt-10">
             <h2 className="text-xl font-bold mb-4">Input Schema</h2>
-            {formData.params.inputSchema.map((input, index) => (
-              <div key={index} className="flex gap-4 mb-4">
-                <Input
-                  label="Name"
-                  placeholder="Parameter name"
-                  value={input.name}
-                  onValueChange={handleSchemaChange("input", index, "name")}
-                />
-                <Select
-                  label="Type"
-                  placeholder="Select type"
-                  value={input.type}
-                  onChange={(e) =>
-                    handleSchemaChange("input", index, "type")(e.target.value)
-                  }
-                >
-                  <SelectItem key="string" value="string">
-                    String
-                  </SelectItem>
-                  <SelectItem key="number" value="number">
-                    Number
-                  </SelectItem>
-                </Select>
-                <Input
-                  label="Label"
-                  placeholder="Display label"
-                  value={input.label}
-                  onValueChange={handleSchemaChange("input", index, "label")}
-                />
-                <Button
-                  color="danger"
-                  onClick={() => removeSchemaItem("input", index)}
-                >
-                  Remove
-                </Button>
-              </div>
-            ))}
+            <div ref={parent0}>
+              {formData.params.inputSchema.map((input, index) => (
+                <div key={index} className="flex gap-4 mb-4">
+                  <Input
+                    label="Name"
+                    placeholder="Parameter name"
+                    value={input.name}
+                    onValueChange={handleSchemaChange("input", index, "name")}
+                  />
+                  <Select
+                    label="Type"
+                    placeholder="Select type"
+                    value={input.type}
+                    onChange={(e) =>
+                      handleSchemaChange("input", index, "type")(e.target.value)
+                    }
+                  >
+                    <SelectItem key="string" value="string">
+                      String
+                    </SelectItem>
+                    <SelectItem key="number" value="number">
+                      Number
+                    </SelectItem>
+                  </Select>
+                  <Input
+                    label="Label"
+                    placeholder="Display label"
+                    value={input.label}
+                    onValueChange={handleSchemaChange("input", index, "label")}
+                  />
+                  <Button
+                    color="danger"
+                    onClick={() => removeSchemaItem("input", index)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              ))}
+            </div>
+
             <Button onClick={() => addSchemaItem("input")}>
               Add Input Parameter
             </Button>
 
             <h2 className="text-xl font-bold mb-4 mt-8">Output Schema</h2>
-            {formData.params.outputSchema.map((output, index) => (
-              <div key={index} className="flex gap-4 mb-4">
-                <Input
-                  label="Name"
-                  placeholder="Parameter name"
-                  value={output.name}
-                  onValueChange={handleSchemaChange("output", index, "name")}
-                />
-                <Select
-                  label="Type"
-                  placeholder="Select type"
-                  value={output.type}
-                  onChange={(e) =>
-                    handleSchemaChange("output", index, "type")(e.target.value)
-                  }
-                >
-                  <SelectItem key="string" value="string">
-                    String
-                  </SelectItem>
-                  <SelectItem key="number" value="number">
-                    Number
-                  </SelectItem>
-                </Select>
-                <Button
-                  color="danger"
-                  onClick={() => removeSchemaItem("output", index)}
-                >
-                  Remove
-                </Button>
-              </div>
-            ))}
+            <div ref={parent1}>
+              {formData.params.outputSchema.map((output, index) => (
+                <div key={index} className="flex gap-4 mb-4">
+                  <Input
+                    label="Name"
+                    placeholder="Parameter name"
+                    value={output.name}
+                    onValueChange={handleSchemaChange("output", index, "name")}
+                  />
+                  <Select
+                    label="Type"
+                    placeholder="Select type"
+                    value={output.type}
+                    onChange={(e) =>
+                      handleSchemaChange(
+                        "output",
+                        index,
+                        "type",
+                      )(e.target.value)
+                    }
+                  >
+                    <SelectItem key="string" value="string">
+                      String
+                    </SelectItem>
+                    <SelectItem key="number" value="number">
+                      Number
+                    </SelectItem>
+                  </Select>
+                  <Button
+                    color="danger"
+                    onClick={() => removeSchemaItem("output", index)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              ))}
+            </div>
 
             <Button onClick={() => addSchemaItem("output")}>
               Add Output Parameter

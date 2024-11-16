@@ -9,3 +9,11 @@
     hsl(var(--nextui-default-50))
   );
 }
+
+.top-gradient-2 {
+  background-image: radial-gradient(
+    circle at center 10px,
+    hsl(var(--nextui-default-100)) 10%,
+    hsl(var(--nextui-default-50))
+  );
+}
