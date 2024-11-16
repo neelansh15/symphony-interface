@@ -5,6 +5,7 @@ import { Head } from "./head";
 import { Navbar } from "@/components/navbar";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
+import { Akira } from "@/fonts";
 
 export default function DefaultLayout({
   children,
@@ -21,7 +22,9 @@ export default function DefaultLayout({
     >
       <Head />
       <Navbar />
-      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-12">
+      <main
+        className={clsx("container mx-auto max-w-7xl px-6 flex-grow pt-12")}
+      >
         {children}
       </main>
       <footer className="w-full flex items-center justify-center mt-2 py-5">

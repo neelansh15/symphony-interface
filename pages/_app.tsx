@@ -8,6 +8,7 @@ import { fontSans, fontMono } from "@/config/fonts";
 import "@/styles/globals.css";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Akira } from "@/fonts";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -20,7 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class">
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          <div className={Akira.variable}>
+            <Component {...pageProps} />
+          </div>
           <Toaster theme={theme === "dark" ? "dark" : "light"} />
         </QueryClientProvider>
       </NextThemesProvider>
