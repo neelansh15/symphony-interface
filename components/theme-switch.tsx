@@ -37,6 +37,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
 
   useEffect(() => {
     setIsMounted(true);
+    onChange();
   }, [isMounted]);
 
   // Prevent Hydration Mismatch
