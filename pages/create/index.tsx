@@ -146,21 +146,42 @@ export default function CreatePage() {
     <>
       <DefaultLayout>
         <section>
-          <h1 className="text-center font-akira text-secondary uppercase font-semibold text-sm">
-            Workflow
-          </h1>
+          <div className="md:flex justify-between items-center">
+            <div>
+              <h1 className="font-akira text-secondary uppercase font-semibold text-sm">
+                Workflow
+              </h1>
 
-          <div className="mt-6">
-            <Input
-              type="text"
-              variant="underlined"
-              onChange={(e) => handleNameChange(e.target.value)}
-              value={wf?.name}
-              classNames={{
-                inputWrapper: "max-w-fit mx-auto",
-                input: "text-4xl font-bold font-akira text-center",
-              }}
-            />
+              <div className="mt-6">
+                <Input
+                  type="text"
+                  variant="underlined"
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  value={wf?.name}
+                  classNames={{
+                    inputWrapper: "max-w-fit",
+                    input: "text-4xl font-bold font-akira",
+                  }}
+                />
+              </div>
+            </div>
+            <div className="mt-5 md:mt-0">
+              <Checkbox isSelected={isRecurring} onValueChange={setRecurring}>
+                Recurring
+              </Checkbox>
+
+              <div ref={recurringInputParent} className="mt-2">
+                {isRecurring && (
+                  <Input
+                    size="sm"
+                    label="Run every X Minutes"
+                    type="number"
+                    value={recurringInterval}
+                    onChange={(e) => setRecurringInterval(e.target.value)}
+                  />
+                )}
+              </div>
+            </div>
           </div>
 
           <div
@@ -216,24 +237,7 @@ export default function CreatePage() {
             </Button>
           </div>
 
-          <div className="mt-5 md:flex justify-between items-center">
-            <div>
-              <Checkbox isSelected={isRecurring} onValueChange={setRecurring}>
-                Recurring
-              </Checkbox>
-
-              <div ref={recurringInputParent} className="mt-2">
-                {isRecurring && (
-                  <Input
-                    label="Run every X Minutes"
-                    type="number"
-                    value={recurringInterval}
-                    onChange={(e) => setRecurringInterval(e.target.value)}
-                  />
-                )}
-              </div>
-            </div>
-
+          <div className="mt-5 md:flex justify-center items-center">
             <Button
               color="primary"
               onClick={handleCreate}
