@@ -1,16 +1,18 @@
 import { api } from "@/config/api";
 import { BlockSchema } from "@/types/apiTypes";
 
-export const createBlock = async (block: Block): Promise<BlockSchema[]> => {
+export const createBlock = async (
+  block: BlockSchema,
+): Promise<BlockSchema[]> => {
   try {
-    return await api("/flow", {
+    return await api("/block", {
       method: "POST",
       body: JSON.stringify(block),
     });
   } catch (error) {
     console.error("Error creating block", error);
+    throw new Error("Error creating block");
   }
-  return [{} as BlockSchema];
 };
 
 export const getBlockById = async (id: string): Promise<BlockSchema[]> => {

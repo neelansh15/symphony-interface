@@ -6,13 +6,15 @@ export type OutputSchema = {
 export type InputSchema = OutputSchema & { label?: string };
 
 export type BlockSchema = {
-  id: number;
-  created_at: string;
+  id?: number;
+  created_at?: string;
   created_by: string;
   name: string;
   description: string;
   location: string;
   vcs_path: string;
+  startup_command: string;
+  build_command: string;
   params: {
     input: InputSchema[];
     output: OutputSchema[];

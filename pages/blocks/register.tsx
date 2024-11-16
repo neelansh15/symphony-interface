@@ -4,7 +4,9 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { useState } from "react";
-import { InputSchema, OutputSchema } from "@/types/apiTypes";
+import { BlockSchema, InputSchema, OutputSchema } from "@/types/apiTypes";
+import { createBlock } from "@/utils/api/block";
+import { toast } from "sonner";
 
 export default function RegisterBlocksPage() {
   const [formData, setFormData] = useState({
@@ -65,10 +67,37 @@ export default function RegisterBlocksPage() {
     }));
   };
 
+  const handleRegisterBlock = async () => {
+    try {
+      const blockData: BlockSchema = {
+        created_by: "0x123",
+        name: formData.name,
+        description: formData.description,
+        location: formData.githubUrl,
+        vcs_path: formData.githubUrl,
+        startup_command: formData.startupCommand || "npm run dev",
+        build_command: formData.buildCommand || "npm run build",
+        params: {
+          input: formData.params.inputSchema,
+          output: formData.params.outputSchema,
+        },
+      };
+
+      toast.info(`Registering block...`);
+
+      await createBlock(blockData);
+
+      toast.success(`Block registered successfully!`);
+    } catch (error) {
+      console.error("Error registering block:", error);
+      toast.error("Error registering block");
+    }
+  };
+
   return (
     <DefaultLayout>
-      <main className="grid place-items-center">
-        <div className="min-w-[600px]">
+      <main className="md:grid place-items-center">
+        <div className="md:min-w-[600px]">
           <h1 className={title()}>Register Blocks</h1>
 
           <section className="mt-10 flex flex-col lg:grid lg:grid-cols-2 gap-4 w-full max-w-2xl">
@@ -192,7 +221,11 @@ export default function RegisterBlocksPage() {
             </Button>
           </section>
 
-          <Button className="mt-10" color="primary">
+          <Button
+            onClick={() => handleRegisterBlock()}
+            className="mt-10"
+            color="primary"
+          >
             Register
           </Button>
         </div>

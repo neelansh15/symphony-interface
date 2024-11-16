@@ -3,7 +3,7 @@ import { Result, FlowSchema } from "@/types/apiTypes";
 
 export const createWorkflow = async (workflow: Workflow): Promise<void> => {
   try {
-    await api("/flow", {
+    return await api("/flow", {
       method: "POST",
       body: JSON.stringify(workflow),
     });
