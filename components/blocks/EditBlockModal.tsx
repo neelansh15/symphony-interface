@@ -64,11 +64,11 @@ export const EditBlockModal = ({
       <ModalContent>
         {(onClose: () => void) => (
           <>
-            <ModalHeader>
-              Editing &nbsp;
-              <span className="bg-success-100 rounded-full px-2">
+            <ModalHeader className="pt-4 flex-col">
+              <p className="text-sm text-secondary-500">Editing</p>
+              <p className="w-fit text-xl font-semibold">
                 {selectedBlock.name}
-              </span>
+              </p>
             </ModalHeader>
             <ModalBody className="pb-6">
               <Card fullWidth>
@@ -77,7 +77,9 @@ export const EditBlockModal = ({
                     <Input
                       key={param.name}
                       label={firstLetterToUpperCase(param.name)}
-                      description={param.type}
+                      description={firstLetterToUpperCase(
+                        param.type === "string" ? "text" : param.type,
+                      )}
                       type="text"
                       className="mt-1 mb-1"
                       value={param.value?.toString() || ""}

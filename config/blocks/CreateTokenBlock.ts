@@ -17,6 +17,26 @@ const createTokenBlock: Block = {
       type: "number",
     },
   ],
+  input: [
+    {
+      name: "name",
+      type: "string",
+    },
+    {
+      name: "symbol",
+      type: "string",
+    },
+    {
+      name: "supply",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      name: "address",
+      type: "string",
+    },
+  ],
 };
 
 export default createTokenBlock;

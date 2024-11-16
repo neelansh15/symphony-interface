@@ -30,8 +30,6 @@ export default function CreatePage() {
 
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
 
-  console.log("Workflow", wf);
-
   const handleNameChange = useCallback(
     (value: string) => {
       setWf((currentVal) => ({ ...currentVal, name: value }));
