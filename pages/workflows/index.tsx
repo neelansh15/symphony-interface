@@ -1,3 +1,4 @@
+import { LogModal } from "@/components/LogModal";
 import { title } from "@/components/primitives";
 import {
   useMultipleWorkflowJobs,
@@ -166,7 +167,10 @@ export default function WorkflowsPage() {
                         : "-"}
                     </TableCell>
                     <TableCell className={clsx(getJobStatusColor(job.status))}>
-                      {job.status}
+                      <div className="flex justify-between items-center">
+                        {job.status}
+                        {job.status === "FAILED" && <LogModal job={job} />}
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
