@@ -31,7 +31,7 @@ export const AddBlockModal = ({
                 <Button
                   key={block.id}
                   onClick={() => {
-                    onAddBlock?.(block.id);
+                    onAddBlock?.(block.blockId);
                     onClose();
                   }}
                   className="p-8 flex flex-row justify-between hover:bg-primary-500 hover:text-white"

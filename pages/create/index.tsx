@@ -13,11 +13,13 @@ import { Card, CardBody } from "@nextui-org/card";
 import { AddBlockModal } from "@/components/blocks/AddBlockModal";
 import { EditBlockModal } from "@/components/blocks/EditBlockModal";
 import autoAnimate from "@formkit/auto-animate";
+import { v4 as uuidv4 } from "uuid";
+import { getBlockById } from "@/utils";
 
 export default function CreatePage() {
   const parent = useRef(null);
 
-  const { wf, setWf, addBlock } = useCurrentWorkflow();
+  const { wf, setWf } = useCurrentWorkflow();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
@@ -26,7 +28,9 @@ export default function CreatePage() {
     onOpenChange: onEditOpenChange,
   } = useDisclosure();
 
-  const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
+  const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
+
+  console.log("Workflow", wf);
 
   const handleNameChange = useCallback(
     (value: string) => {
@@ -41,9 +45,30 @@ export default function CreatePage() {
 
   const handleAddBlock = useCallback(
     (blockId: string) => {
-      addBlock(blockId);
+      setWf((currentVal) => {
+        const baseBlock = getBlockById(blockId);
+        const blocks = currentVal?.blocks ? [...currentVal.blocks] : [];
+
+        const id = uuidv4();
+
+        const newBlock = {
+          ...baseBlock,
+          id,
+        };
+
+        blocks.push(newBlock);
+
+        setSelectedBlock(newBlock);
+
+        console.log("NEW BLOCK", newBlock);
+
+        return {
+          ...currentVal,
+          blocks,
+        };
+      });
     },
-    [addBlock],
+    [setWf],
   );
 
   const handleRemoveBlock = useCallback(
@@ -90,7 +115,7 @@ export default function CreatePage() {
             <div ref={parent}>
               {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
                 <Card
-                  className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base"
+                  className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base w-screen"
                   fullWidth
                 >
                   <CardBody className="flex justify-center items-center ">
@@ -102,17 +127,17 @@ export default function CreatePage() {
                 <>
                   <BlockCard
                     key={block.id + i}
-                    blockId={block.id}
+                    blockId={block.blockId}
                     // w-screen here due to some weird behaviour when using autoanimate
                     className="mt-5 w-screen"
                     onDismiss={handleRemoveBlock(i)}
                     onEditClick={() => {
-                      setSelectedBlock(block.id);
+                      setSelectedBlock(block);
                       onEditOpen();
                     }}
                   />
                   {wf.blocks && i < wf.blocks.length - 1 && (
-                    <ArrowDownIcon className="mt-5" size={24} />
+                    <ArrowDownIcon className="mt-5 mx-auto" size={24} />
                   )}
                 </>
               ))}
@@ -141,13 +166,12 @@ export default function CreatePage() {
         onOpenChange={onOpenChange}
         onAddBlock={(blockId) => {
           handleAddBlock(blockId);
-          setSelectedBlock(blockId);
           onEditOpen();
         }}
       />
       {selectedBlock && (
         <EditBlockModal
-          blockId={selectedBlock}
+          selectedBlock={selectedBlock}
           isOpen={isEditOpen}
           onOpenChange={onEditOpenChange}
         />

@@ -8,6 +8,7 @@ interface Param extends Field {
 }
 
 interface Block {
+  blockId: string;
   id: string;
   params: Param[];
 
