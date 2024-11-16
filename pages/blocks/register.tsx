@@ -133,6 +133,7 @@ export default function RegisterBlocksPage() {
               value={formData.githubUrl}
               onValueChange={handleChange("githubUrl")}
               className="col-span-2"
+              description="Please make sure the repository is public"
             />
 
             <Input

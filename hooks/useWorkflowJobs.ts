@@ -17,5 +17,6 @@ export const useMultipleWorkflowJobs = (flow_ids: string[]) => {
       return Promise.all(flow_ids.map((flow_id) => getJobsByFlowId(flow_id)));
     },
     refetchInterval: 5000,
+    enabled: flow_ids && flow_ids.length > 0,
   });
 };

@@ -1,4 +1,8 @@
 import { title } from "@/components/primitives";
+import {
+  useMultipleWorkflowJobs,
+  useWorkflowJobs,
+} from "@/hooks/useWorkflowJobs";
 import { useWorkflows } from "@/hooks/useWorkflows";
 import DefaultLayout from "@/layouts/default";
 import autoAnimate from "@formkit/auto-animate";
@@ -24,6 +28,13 @@ enum StatusColor {
 
 export default function WorkflowsPage() {
   const { data: wfs, isLoading } = useWorkflows();
+
+  const { data: jobs, isLoading: isJobsLoading } = useMultipleWorkflowJobs(
+    // @ts-ignore
+    wfs ? wfs.map((wf) => wf.id) : [],
+  );
+
+  const allJobs = jobs?.flat();
 
   return (
     <DefaultLayout>
@@ -64,6 +75,35 @@ export default function WorkflowsPage() {
                   {isLoading ? "Loading workflows..." : "No workflows found"}
                 </TableCell>
                 {/* <TableCell> </TableCell> */}
+                <TableCell> </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+
+        <Table aria-label="Your Workflows" className="mt-5">
+          <TableHeader>
+            <TableColumn>JOB ID</TableColumn>
+            <TableColumn>WORKFLOW ID</TableColumn>
+            <TableColumn>STATUS</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {allJobs && allJobs.length > 0 && !isJobsLoading ? (
+              allJobs.map((job) => (
+                <TableRow key={job.id}>
+                  <TableCell>{job.id}</TableCell>
+                  <TableCell>{job.flow_id}</TableCell>
+                  <TableCell>{job.status}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>
+                  {isJobsLoading
+                    ? "Loading workflow jobs..."
+                    : "No workflow jobs found"}
+                </TableCell>
+                <TableCell> </TableCell>
                 <TableCell> </TableCell>
               </TableRow>
             )}
