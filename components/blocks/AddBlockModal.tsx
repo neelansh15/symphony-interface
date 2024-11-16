@@ -29,13 +29,13 @@ export const AddBlockModal = ({
         {(onClose) => (
           <>
             <ModalHeader>Add to Workflow</ModalHeader>
-            <ModalBody className="pb-6">
+          <ModalBody className="pb-6 max-h-96 overflow-y-auto">
               {blocksList &&
                 blocksList.map((block) => (
                   <Button
                     key={block.id}
                     onClick={() => {
-                      onAddBlock?.(block.id.toString());
+                      onAddBlock?.(block.id ? block.id.toString() : "");
                       onClose();
                     }}
                     className="p-8 flex flex-row justify-between hover:bg-primary-500 hover:text-white"
@@ -43,7 +43,11 @@ export const AddBlockModal = ({
                   >
                     <div className="text-left">
                       <h3 className="text-md font-semibold">{block.name}</h3>
-                      <p className="text-xs">{block.description}</p>
+                      <p className="text-xs">
+                        {block.description?.length > 50
+                          ? block.description.slice(0, 50) + "..."
+                          : block.description}
+                      </p>
                     </div>
                     <PlusIcon size={24} />
                   </Button>

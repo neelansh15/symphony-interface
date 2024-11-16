@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.top-gradient {
+    background-image: radial-gradient(circle at top, red 1, transparent 0);
+}
