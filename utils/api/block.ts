@@ -41,7 +41,7 @@ export const getBlocksByCreator = async (
   creator_address: string,
 ): Promise<BlockSchema[]> => {
   try {
-    return await api(`/block/: ${creator_address}`, {
+    return await api(`/block/${creator_address}`, {
       method: "GET",
     });
   } catch (error) {

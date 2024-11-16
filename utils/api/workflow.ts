@@ -14,7 +14,7 @@ export const createWorkflow = async (workflow: Workflow): Promise<void> => {
 
 export const getWorkflowById = async (id: string): Promise<FlowSchema[]> => {
   try {
-    return await api(`/flow/:${id}`, {
+    return await api(`/flow/${id}`, {
       method: "GET",
     });
   } catch (error) {
@@ -38,7 +38,7 @@ export const getWorkflowsByCreator = async (
   creator_address: string,
 ): Promise<FlowSchema[]> => {
   try {
-    return await api(`/flow/: ${creator_address}`, {
+    return await api(`/flow/${creator_address}`, {
       method: "GET",
     });
   } catch (error) {
@@ -52,7 +52,7 @@ export const updateWorkflow = async (
   workflow: Workflow,
 ): Promise<void> => {
   try {
-    await api(`/flow/:${id}`, {
+    await api(`/flow/${id}`, {
       method: "PATCH",
       body: JSON.stringify(workflow),
     });
@@ -63,7 +63,7 @@ export const updateWorkflow = async (
 
 export const deleteWorkflow = async (id: string): Promise<void> => {
   try {
-    await api(`/flow/:${id}`, {
+    await api(`/flow/${id}`, {
       method: "DELETE",
     });
   } catch (error) {

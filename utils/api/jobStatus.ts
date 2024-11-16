@@ -17,7 +17,20 @@ export const createJob = async (
 
 export const getJobById = async (id: string): Promise<JobStatusSchema[]> => {
   try {
-    return await api(`/job_status/:${id}`, {
+    return await api(`/job_status/${id}`, {
+      method: "GET",
+    });
+  } catch (error) {
+    console.log("Error while getting job", error);
+  }
+  return [{} as JobStatusSchema];
+};
+
+export const getJobByFlowId = async (
+  flow_id: string,
+): Promise<JobStatusSchema[]> => {
+  try {
+    return await api(`/job_status/flow/${flow_id}`, {
       method: "GET",
     });
   } catch (error) {
@@ -30,7 +43,7 @@ export const getJobStatusByStatus = async (
   status: string,
 ): Promise<JobStatusSchema[]> => {
   try {
-    return await api(`/job_status/status/:${status}`, {
+    return await api(`/job_status/status/${status}`, {
       method: "GET",
     });
   } catch (error) {
@@ -44,7 +57,7 @@ export const updateJobStatus = async (
   job_status: JobStatusSchema,
 ): Promise<void> => {
   try {
-    await api(`/job_status/:${id}`, {
+    await api(`/job_status/${id}`, {
       method: "PATCH",
       body: JSON.stringify(job_status),
     });
