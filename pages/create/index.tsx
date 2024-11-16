@@ -87,8 +87,14 @@ export default function CreatePage() {
         ...wf,
         block_sequence: [9], // TODO: Update later if needed
         block_params: wf.blocks
-          ?.map((b) => b.params)
-          .map((p) => p.map((pp) => pp.value)),
+          ? wf.blocks.map((block) => {
+              const params: Record<string, any> = {};
+              block.params?.forEach((param) => {
+                params[param.name] = param.value;
+              });
+              return params;
+            })
+          : [],
       };
       toast.info("Creating workflow...");
       await createWorkflow(workflow);
