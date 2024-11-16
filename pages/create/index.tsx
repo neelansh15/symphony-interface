@@ -194,8 +194,12 @@ export default function CreatePage() {
             </Button>
           </div>
 
-          <div className="mt-5">
-            <Button color="primary" onClick={handleCreate}>
+          <div className="mt-5 flex justify-center items-center">
+            <Button
+              color="primary"
+              onClick={handleCreate}
+              className="font-akira w-full md:max-w-xl py-8 my-6"
+            >
               Create
             </Button>
           </div>

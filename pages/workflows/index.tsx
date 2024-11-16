@@ -79,6 +79,11 @@ export default function WorkflowsPage() {
     }
   };
 
+  const getWorkflowName = (flowId: string | number) => {
+    const workflow = wfs?.find((wf) => wf.id === flowId);
+    return workflow?.name || flowId;
+  };
+
   return (
     <DefaultLayout>
       <h1
@@ -139,7 +144,7 @@ export default function WorkflowsPage() {
         <Table aria-label="Your Workflows" className="mt-5">
           <TableHeader>
             <TableColumn>JOB ID</TableColumn>
-            <TableColumn>WORKFLOW ID</TableColumn>
+            <TableColumn>WORKFLOW</TableColumn>
             <TableColumn>DATETIME</TableColumn>
             <TableColumn>STATUS</TableColumn>
           </TableHeader>
@@ -148,7 +153,7 @@ export default function WorkflowsPage() {
               allJobs.map((job) => (
                 <TableRow key={job.id}>
                   <TableCell>{job.id}</TableCell>
-                  <TableCell>{job.flow_id}</TableCell>
+                  <TableCell>{getWorkflowName(job.flow_id)}</TableCell>
                   <TableCell>
                     {job.created_at
                       ? new Date(job.created_at).toLocaleString()
