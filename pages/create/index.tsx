@@ -118,7 +118,7 @@ export default function CreatePage() {
     <>
       <DefaultLayout>
         <section>
-          <h1 className="text-secondary uppercase font-semibold text-sm">
+          <h1 className="font-akira text-secondary uppercase font-semibold text-sm">
             Workflow
           </h1>
 
@@ -129,8 +129,8 @@ export default function CreatePage() {
               onChange={(e) => handleNameChange(e.target.value)}
               value={wf?.name}
               classNames={{
-                inputWrapper: "max-w-max",
-                input: "text-4xl font-bold",
+                inputWrapper: "max-w-fit",
+                input: "text-4xl font-bold font-akira",
               }}
             />
           </div>

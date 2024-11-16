@@ -8,6 +8,7 @@ import { BlockSchema, InputSchema, OutputSchema } from "@/types/apiTypes";
 import { createBlock } from "@/utils/api/block";
 import { toast } from "sonner";
 import autoAnimate from "@formkit/auto-animate";
+import clsx from "clsx";
 
 export default function RegisterBlocksPage() {
   const parent0 = useRef(null);
@@ -109,8 +110,19 @@ export default function RegisterBlocksPage() {
   return (
     <DefaultLayout>
       <main className="md:grid place-items-center">
-        <div className="md:min-w-[600px]">
-          <h1 className={title()}>Register Blocks</h1>
+        <div className="md:w-full md:max-w-[600px]">
+          <h1
+            className={clsx(
+              title(),
+              "font-akira underline decoration-secondary-500",
+            )}
+          >
+            Register Blocks
+          </h1>
+          <p className="mt-3">
+            Blocks are the foundation of a Symphony Workflow. Read the developer
+            docs to find how you can create your own custom block.
+          </p>
 
           <section className="mt-10 flex flex-col lg:grid lg:grid-cols-2 gap-4 w-full max-w-2xl">
             <Input

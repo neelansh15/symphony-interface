@@ -82,9 +82,12 @@ export default function WorkflowsPage() {
   return (
     <DefaultLayout>
       <h1
-        className={title({
-          color: "violet",
-        })}
+        className={clsx(
+          title({
+            size: "lg",
+          }),
+          "font-akira",
+        )}
       >
         Workflows
       </h1>
@@ -130,7 +133,7 @@ export default function WorkflowsPage() {
           </TableBody>
         </Table>
 
-        <h2 className="mt-10 font-bold text-4xl text-cyan-950 dark:text-cyan-100">
+        <h2 className="mt-10 font-akira font-bold text-4xl text-cyan-950 dark:text-cyan-100">
           Jobs
         </h2>
         <Table aria-label="Your Workflows" className="mt-5">
