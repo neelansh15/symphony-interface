@@ -44,16 +44,16 @@ export const BlockCard = ({
             </Button>
           </div>
         </div>
-        <p className="text-sm text-secondary-900 font-medium space-x-1">
+        <div className="text-secondary-900 font-medium space-x-1 overflow-x-auto flex">
           {block.params
             .map(
               (param, i, arr) =>
                 param.value && (
-                  <Chip>{param.value}</Chip>
+                  <Chip size="sm">{param.value}</Chip>
                 ),
             )
             .slice(0, 5)}
-        </p>
+        </div>
       </CardBody>
     </Card>
   );
