@@ -66,7 +66,7 @@ export const EditBlockModal = ({
           <>
             <ModalHeader className="pt-4 flex-col">
               <p className="text-sm text-secondary-500">Editing</p>
-              <p className="w-fit text-xl font-semibold">
+              <p className="mt-1 w-fit text-xl font-semibold">
                 {selectedBlock.name}
               </p>
             </ModalHeader>
@@ -88,7 +88,7 @@ export const EditBlockModal = ({
                   ))}
                 </CardBody>
               </Card>
-              <Button className="mt-4" onClick={handleSave}>
+              <Button color="primary" className="mt-4" onClick={handleSave}>
                 Save
               </Button>
             </ModalBody>
