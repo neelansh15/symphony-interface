@@ -34,7 +34,6 @@ export default function WorkflowsPage() {
       </h1>
 
       <section className="mt-5">
-        {isLoading && <p>Loading...</p>}
         <Table aria-label="Your Workflows">
           <TableHeader>
             <TableColumn>NAME</TableColumn>
@@ -59,7 +58,9 @@ export default function WorkflowsPage() {
               ))
             ) : (
               <TableRow>
-                <TableCell>No workflows found</TableCell>
+                <TableCell>
+                  {isLoading ? "Loading workflows..." : "No workflows found"}
+                </TableCell>
                 {/* <TableCell> </TableCell> */}
                 <TableCell> </TableCell>
               </TableRow>
