@@ -15,7 +15,7 @@ import { EditBlockModal } from "@/components/blocks/EditBlockModal";
 import autoAnimate from "@formkit/auto-animate";
 import { v4 as uuidv4 } from "uuid";
 import { getBlockById } from "@/utils";
-import { createWorkflow } from "@/utils/api/workflows";
+import { createWorkflow } from "@/utils/api/workflow";
 import { toast } from "sonner";
 
 export default function CreatePage() {
