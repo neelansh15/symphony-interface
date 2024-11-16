@@ -17,6 +17,10 @@ export const siteConfig = {
       href: "/create",
     },
     {
+      label: "Register Block",
+      href: "/blocks/register",
+    },
+    {
       label: "About",
       href: "/about",
     },
@@ -33,6 +37,10 @@ export const siteConfig = {
     {
       label: "Create Workflow",
       href: "/create",
+    },
+    {
+      label: "Register Block",
+      href: "/blocks/register",
     },
     {
       label: "About",

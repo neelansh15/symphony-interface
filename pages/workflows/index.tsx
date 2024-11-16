@@ -1,6 +1,7 @@
 import { title } from "@/components/primitives";
 import { useWorkflows } from "@/hooks/useWorkflows";
 import DefaultLayout from "@/layouts/default";
+import autoAnimate from "@formkit/auto-animate";
 import { Button } from "@nextui-org/button";
 import {
   Table,
@@ -12,6 +13,7 @@ import {
 } from "@nextui-org/table";
 import clsx from "clsx";
 import { PlayIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 enum StatusColor {
   IDLE = "gray",
