@@ -68,7 +68,7 @@ export const EditBlockModal = ({
           <>
             <ModalHeader className="pt-4 flex-col">
               <p className="text-sm text-secondary-500 font-akira">Editing</p>
-              <p className="mt-1 w-fit text-xl font-semibold font-akira">
+              <p className="w-fit text-xl font-semibold font-akira">
                 {selectedBlock.name}
               </p>
             </ModalHeader>

@@ -70,7 +70,7 @@ export default function WorkflowsPage() {
         return "text-gray-500";
       case "RUNNING":
         return "text-blue-500";
-      case "COMPLETED":
+      case "SUCCESS":
         return "text-green-500";
       case "FAILED":
         return "text-red-500";
