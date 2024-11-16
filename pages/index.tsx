@@ -24,7 +24,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-      <section className="mt-10 flex flex-wrap justify-around gap-5">
+      <section className="mt-10 grid grid-cols-2 md:flex flex-wrap justify-around gap-5">
         <div className="px-10 py-6 bg-secondary-900 text-secondary-100 font-black font-akira w-fit rounded-full">
           TOKENS
         </div>

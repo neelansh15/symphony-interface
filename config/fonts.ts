@@ -15,6 +15,7 @@ export const fontMono = FontMono({
 
 export const Akira = localFont({
   src: "./Akira Expanded.otf",
+  display: "swap",
   variable: "--font-akira",
 });
 
