@@ -10,11 +10,7 @@ import DefaultLayout from "@/layouts/default";
 import { Lobster } from "next/font/google";
 import clsx from "clsx";
 import { PlusIcon } from "lucide-react";
-
-const lobster = Lobster({
-  display: "swap",
-  weight: "400",
-});
+import { lobster } from "@/fonts";
 
 export default function IndexPage() {
   return (
@@ -22,7 +18,9 @@ export default function IndexPage() {
       <section className="fade-in-up h-screen w-full bg-secondary-100 rounded-3xl flex justify-center items-center">
         <div className="flex flex-col gap-8 items-center">
           <h1 className={clsx(lobster.className, "text-8xl")}>Symphony</h1>
-          <h2 className="font-akira text-xl text-secondary-800">Zapier for Web3</h2>
+          <h2 className="font-akira text-xl text-secondary-800">
+            Zapier for Web3
+          </h2>
         </div>
       </section>
 

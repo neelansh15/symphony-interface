@@ -3,7 +3,6 @@ import { ArrowDownIcon, PlusIcon } from "lucide-react";
 import { Button } from "@nextui-org/button";
 import { BlockCard } from "@/components/blocks/BlockCard";
 import DefaultLayout from "@/layouts/default";
-import "./styles.css";
 import { useCurrentWorkflow } from "@/hooks/useCurrentWorkflow";
 
 import { Input } from "@nextui-org/input";
@@ -41,6 +40,7 @@ export default function CreatePage() {
 
   const handleNameChange = useCallback(
     (value: string) => {
+      // @ts-ignore
       setWf((currentVal) => ({ ...currentVal, name: value }));
     },
     [setWf],
@@ -49,14 +49,15 @@ export default function CreatePage() {
   const handleAddBlock = useCallback(
     async (blockId: string) => {
       const baseBlock = await getBlockById(blockId);
+      // @ts-ignore
       setWf((currentVal) => {
         const blocks = currentVal?.blocks ? [...currentVal.blocks] : [];
 
-        // const id = uuidv4();
+        const id = uuidv4();
 
         const newBlock = {
           ...baseBlock,
-          id: Number(baseBlock.id),
+          id: Number(baseBlock.id) + "_" + id,
         };
 
         blocks.push(newBlock);
@@ -74,6 +75,7 @@ export default function CreatePage() {
 
   const handleRemoveBlock = useCallback(
     (index: number) => () => {
+      // @ts-ignore
       setWf((currentVal) => {
         const blocks = currentVal?.blocks ? [...currentVal.blocks] : [];
         blocks.splice(index, 1);
@@ -92,7 +94,7 @@ export default function CreatePage() {
     try {
       const workflow = {
         ...wf,
-        block_sequence: wf.blocks?.map((b) => b.id),
+        block_sequence: wf.blocks?.map((b) => b.id.toString().split("_")[0]),
         block_params: wf.blocks
           ? wf.blocks.map((block) => {
               const params: Record<string, any> = {};
@@ -103,9 +105,12 @@ export default function CreatePage() {
             })
           : [],
       };
+
       console.log("Creating workflow", workflow);
       toast.info("Creating workflow...");
+
       await createWorkflow(workflow);
+
       toast.success("Workflow created successfully");
 
       // Redirect to workflows page

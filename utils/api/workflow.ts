@@ -9,6 +9,7 @@ export const createWorkflow = async (workflow: Workflow): Promise<void> => {
     });
   } catch (error) {
     console.error("Error creating workflow", error);
+    throw error;
   }
 };
 

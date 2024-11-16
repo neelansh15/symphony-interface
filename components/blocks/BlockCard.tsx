@@ -52,7 +52,7 @@ export const BlockCard = ({
             block.params &&
             block.params.map(
               (param, i, arr) =>
-                param.value && <Chip size="sm">{param.value}</Chip>,
+                param.value && <Chip key={param.name} size="sm">{param.value}</Chip>,
             )}
         </div>
       </CardBody>

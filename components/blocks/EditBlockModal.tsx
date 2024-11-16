@@ -21,10 +21,6 @@ export const EditBlockModal = ({
   isOpen,
   onOpenChange,
 }: EditBlockModalProps) => {
-  if (!selectedBlock) {
-    return null;
-  }
-
   const { wf, setWf } = useCurrentWorkflow();
 
   const initialParams = selectedBlock?.params || [];
@@ -33,7 +29,7 @@ export const EditBlockModal = ({
 
   // Find previous block if it exists
   const previousBlock = wf?.blocks?.find((_, index, arr) => {
-    const currentBlockIndex = arr.findIndex((b) => b.id === selectedBlock.id);
+    const currentBlockIndex = arr.findIndex((b) => b.id === selectedBlock?.id);
     return index === currentBlockIndex - 1;
   });
   const previousBlockOutput = previousBlock?.output || [];
@@ -42,7 +38,7 @@ export const EditBlockModal = ({
     if (!wf || !wf.blocks) return;
 
     const updatedBlocks = wf.blocks.map((b) =>
-      b.id === selectedBlock.id ? { ...b, params: localParams } : b,
+      b.id === selectedBlock?.id ? { ...b, params: localParams } : b,
     );
     setWf({ ...wf, blocks: updatedBlocks });
 
@@ -58,8 +54,12 @@ export const EditBlockModal = ({
   };
 
   useEffect(() => {
-    setLocalParams(selectedBlock.params);
+    setLocalParams(selectedBlock ? selectedBlock.params : []);
   }, [selectedBlock]);
+
+  if (!selectedBlock) {
+    return null;
+  }
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>

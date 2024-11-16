@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 
 import { NextUIProvider } from "@nextui-org/system";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useRouter } from "next/router";
 
 import { fontSans, fontMono } from "@/config/fonts";
@@ -14,12 +14,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const queryClient = new QueryClient();
 
+  const { theme } = useTheme();
+
   return (
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class">
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
-          <Toaster />
+          <Toaster theme={theme === "dark" ? "dark" : "light"} />
         </QueryClientProvider>
       </NextThemesProvider>
     </NextUIProvider>
