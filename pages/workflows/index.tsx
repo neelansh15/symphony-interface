@@ -1,6 +1,7 @@
 import { title } from "@/components/primitives";
 import { useWorkflows } from "@/hooks/useWorkflows";
 import DefaultLayout from "@/layouts/default";
+import { Button } from "@nextui-org/button";
 import {
   Table,
   TableHeader,
@@ -10,6 +11,7 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import clsx from "clsx";
+import { PlayIcon } from "lucide-react";
 
 enum StatusColor {
   IDLE = "gray",
@@ -25,7 +27,7 @@ export default function WorkflowsPage() {
     <DefaultLayout>
       <h1
         className={title({
-          color: "blue",
+          color: "violet",
         })}
       >
         Workflows
@@ -36,7 +38,7 @@ export default function WorkflowsPage() {
         <Table aria-label="Your Workflows">
           <TableHeader>
             <TableColumn>NAME</TableColumn>
-            <TableColumn>DESCRIPTION</TableColumn>
+            {/* <TableColumn>DESCRIPTION</TableColumn> */}
             <TableColumn>STATUS</TableColumn>
           </TableHeader>
           <TableBody>
@@ -44,16 +46,21 @@ export default function WorkflowsPage() {
               wfs.map((wfs) => (
                 <TableRow key={wfs.name}>
                   <TableCell>{wfs.name}</TableCell>
-                  <TableCell>{wfs.description || "-"}</TableCell>
+                  {/* <TableCell>{wfs.description || "-"}</TableCell> */}
                   <TableCell>
-                    <p className={clsx()}>Active</p>
+                    <div className="flex justify-between items-center">
+                      <p className={clsx()}>Idle</p>
+                      <Button color="primary">
+                        <PlayIcon /> Run
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell>No workflows found</TableCell>
-                <TableCell> </TableCell>
+                {/* <TableCell> </TableCell> */}
                 <TableCell> </TableCell>
               </TableRow>
             )}
