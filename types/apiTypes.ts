@@ -33,11 +33,11 @@ export type FlowSchema = {
 };
 
 export type JobStatusSchema = {
-  id: number;
+  id?: number;
   flow_id: number;
-  created_at: string;
-  status: string;
-  details: string;
+  created_at?: string;
+  status?: string;
+  details?: string;
 };
 
 export type Result<T = string> = {

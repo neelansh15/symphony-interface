@@ -21,6 +21,8 @@ interface Block {
 }
 
 interface Workflow {
+  id: string; // for compatibility with a bit different types from backend
+
   name?: string;
   description?: string;
   blocks?: Block[];
