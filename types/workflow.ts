@@ -1,6 +1,6 @@
 interface Field {
-  name: string;
-  type: "string" | "number";
+  name?: string;
+  type?: "string" | "number";
 }
 
 interface Param extends Field {
@@ -10,7 +10,7 @@ interface Param extends Field {
 
 interface Block {
   blockId: string;
-  id: string;
+  id: string | number;
   params: Param[];
 
   name?: string;

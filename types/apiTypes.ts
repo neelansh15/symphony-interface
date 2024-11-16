@@ -1,3 +1,10 @@
+export type OutputSchema = {
+  name?: string;
+  type?: "string" | "number";
+};
+
+export type InputSchema = OutputSchema & { label?: string };
+
 export type BlockSchema = {
   id: number;
   created_at: string;
@@ -6,7 +13,10 @@ export type BlockSchema = {
   description: string;
   location: string;
   vcs_path: string;
-  params: any;
+  params: {
+    input: InputSchema[];
+    output: OutputSchema[];
+  };
 };
 
 export type FlowSchema = {

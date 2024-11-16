@@ -15,7 +15,7 @@ export const createBlock = async (block: Block): Promise<BlockSchema[]> => {
 
 export const getBlockById = async (id: string): Promise<BlockSchema[]> => {
   try {
-    return await api(`/block/:${id}`, {
+    return await api(`/block/${id}`, {
       method: "GET",
     });
   } catch (error) {

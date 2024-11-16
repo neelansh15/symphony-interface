@@ -40,16 +40,16 @@ export default function CreatePage() {
   );
 
   const handleAddBlock = useCallback(
-    (blockId: string) => {
+    async (blockId: string) => {
+      const baseBlock = await getBlockById(blockId);
       setWf((currentVal) => {
-        const baseBlock = getBlockById(blockId);
         const blocks = currentVal?.blocks ? [...currentVal.blocks] : [];
 
-        const id = uuidv4();
+        // const id = uuidv4();
 
         const newBlock = {
           ...baseBlock,
-          id,
+          id: Number(baseBlock.id),
         };
 
         blocks.push(newBlock);
@@ -85,17 +85,18 @@ export default function CreatePage() {
     try {
       const workflow = {
         ...wf,
-        block_sequence: [9], // TODO: Update later if needed
+        block_sequence: wf.blocks?.map((b) => b.id),
         block_params: wf.blocks
           ? wf.blocks.map((block) => {
               const params: Record<string, any> = {};
               block.params?.forEach((param) => {
-                params[param.name] = param.value;
+                params[param.name || ""] = param.value;
               });
               return params;
             })
           : [],
       };
+      console.log("Creating workflow", workflow);
       toast.info("Creating workflow...");
       await createWorkflow(workflow);
       toast.success("Workflow created successfully");
@@ -145,7 +146,7 @@ export default function CreatePage() {
               {wf?.blocks?.map((block, i) => (
                 <>
                   <BlockCard
-                    key={block.id + i}
+                    key={block.id.toString() + i}
                     block={block}
                     // w-screen here due to some weird behaviour when using autoanimate
                     className="mt-5 w-screen"
@@ -156,7 +157,11 @@ export default function CreatePage() {
                     }}
                   />
                   {wf.blocks && i < wf.blocks.length - 1 && (
-                    <ArrowDownIcon className="mt-5 mx-auto" size={24} />
+                    <ArrowDownIcon
+                      key={"arrow_i"}
+                      className="mt-5 mx-auto"
+                      size={24}
+                    />
                   )}
                 </>
               ))}
