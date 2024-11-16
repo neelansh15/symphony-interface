@@ -19,13 +19,18 @@ import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
 import { useRouter } from "next/router";
+import { Checkbox } from "@nextui-org/checkbox";
 
 export default function CreatePage() {
   const parent = useRef(null);
+  const recurringInputParent = useRef(null);
 
   const router = useRouter();
 
   const { wf, setWf } = useCurrentWorkflow();
+
+  const [isRecurring, setRecurring] = useState(false);
+  const [recurringInterval, setRecurringInterval] = useState("");
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
@@ -104,6 +109,13 @@ export default function CreatePage() {
               return params;
             })
           : [],
+
+        ...(isRecurring && {
+          trigger_type: "time",
+
+          // Convert recurringInterval from minutes to milliseconds
+          trigger_condition: Number(recurringInterval) * 60 * 1000,
+        }),
       };
 
       console.log("Creating workflow", workflow);
@@ -124,6 +136,11 @@ export default function CreatePage() {
   useEffect(() => {
     parent.current && autoAnimate(parent.current);
   }, [parent]);
+
+  useEffect(() => {
+    recurringInputParent.current &&
+      autoAnimate(recurringInputParent.current, {});
+  }, [recurringInputParent]);
 
   return (
     <>
@@ -199,7 +216,24 @@ export default function CreatePage() {
             </Button>
           </div>
 
-          <div className="mt-5 flex justify-center items-center">
+          <div className="mt-5 md:flex justify-between items-center">
+            <div>
+              <Checkbox isSelected={isRecurring} onValueChange={setRecurring}>
+                Recurring
+              </Checkbox>
+
+              <div ref={recurringInputParent} className="mt-2">
+                {isRecurring && (
+                  <Input
+                    label="Run every X Minutes"
+                    type="number"
+                    value={recurringInterval}
+                    onChange={(e) => setRecurringInterval(e.target.value)}
+                  />
+                )}
+              </div>
+            </div>
+
             <Button
               color="primary"
               onClick={handleCreate}

@@ -1,7 +1,9 @@
 import { api } from "@/config/api";
-import { Result, FlowSchema } from "@/types/apiTypes";
+import { FlowSchema } from "@/types/apiTypes";
 
-export const createWorkflow = async (workflow: Workflow): Promise<void> => {
+export const createWorkflow = async (
+  workflow: Partial<Workflow>,
+): Promise<void> => {
   try {
     return await api("/flow", {
       method: "POST",
