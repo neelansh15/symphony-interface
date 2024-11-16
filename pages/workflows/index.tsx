@@ -146,7 +146,11 @@ export default function WorkflowsPage() {
                 <TableRow key={job.id}>
                   <TableCell>{job.id}</TableCell>
                   <TableCell>{job.flow_id}</TableCell>
-                  <TableCell>{job.created_at || "-"}</TableCell>
+                  <TableCell>
+                    {job.created_at
+                      ? new Date(job.created_at).toLocaleString()
+                      : "-"}
+                  </TableCell>
                   <TableCell className={clsx(getJobStatusColor(job.status))}>
                     {job.status}
                   </TableCell>
