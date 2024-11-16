@@ -21,12 +21,12 @@ export const getJobById = async (id: string): Promise<JobStatusSchema[]> => {
       method: "GET",
     });
   } catch (error) {
-    console.log("Error while getting job", error);
+    console.error("Error while getting job", error);
   }
   return [{} as JobStatusSchema];
 };
 
-export const getJobByFlowId = async (
+export const getJobsByFlowId = async (
   flow_id: string,
 ): Promise<JobStatusSchema[]> => {
   try {
@@ -34,9 +34,9 @@ export const getJobByFlowId = async (
       method: "GET",
     });
   } catch (error) {
-    console.log("Error while getting job", error);
+    console.error("Error while getting job", error);
+    return [];
   }
-  return [{} as JobStatusSchema];
 };
 
 export const getJobStatusByStatus = async (
@@ -47,7 +47,7 @@ export const getJobStatusByStatus = async (
       method: "GET",
     });
   } catch (error) {
-    console.log("Error while getting jobs", error);
+    console.error("Error while getting jobs", error);
   }
   return [{} as JobStatusSchema];
 };
