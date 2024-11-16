@@ -80,9 +80,12 @@ export const EditBlockModal = ({
                       Available variables from previous block.
                     </span>
                     <br />
-                    <span className="text-gray-300">
-                      Use &#123;&#123;variableName &#125;&#125; to access inside
-                      the input fields
+                    <span className="text-gray-500 dark:text-gray-300">
+                      Use{" "}
+                      <code className="bg-gray-200 dark:bg-default-200">
+                        &#123;&#123; variableName &#125;&#125;
+                      </code>{" "}
+                      to access value inside the fields
                     </span>
                   </p>
                   {previousBlockOutput.map((param) => (
