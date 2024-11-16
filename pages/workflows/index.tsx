@@ -1,4 +1,5 @@
 import { title } from "@/components/primitives";
+import { useWorkflows } from "@/hooks/useWorkflows";
 import DefaultLayout from "@/layouts/default";
 import {
   Table,
@@ -18,6 +19,8 @@ enum StatusColor {
 }
 
 export default function WorkflowsPage() {
+  const { data: wfs, isLoading } = useWorkflows();
+
   return (
     <DefaultLayout>
       <h1
@@ -29,20 +32,31 @@ export default function WorkflowsPage() {
       </h1>
 
       <section className="mt-5">
+        {isLoading && <p>Loading...</p>}
         <Table aria-label="Your Workflows">
           <TableHeader>
             <TableColumn>NAME</TableColumn>
-            <TableColumn>ROLE</TableColumn>
+            <TableColumn>DESCRIPTION</TableColumn>
             <TableColumn>STATUS</TableColumn>
           </TableHeader>
           <TableBody>
-            <TableRow key="1">
-              <TableCell>Tony Reichert</TableCell>
-              <TableCell>CEO</TableCell>
-              <TableCell>
-                <p className={clsx()}>Active</p>
-              </TableCell>
-            </TableRow>
+            {wfs && !isLoading ? (
+              wfs.map((wfs) => (
+                <TableRow key={wfs.name}>
+                  <TableCell>{wfs.name}</TableCell>
+                  <TableCell>{wfs.description || "-"}</TableCell>
+                  <TableCell>
+                    <p className={clsx()}>Active</p>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>No workflows found</TableCell>
+                <TableCell> </TableCell>
+                <TableCell> </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </section>
