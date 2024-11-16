@@ -25,6 +25,7 @@ import {
   SearchIcon,
   Logo,
 } from "@/components/icons";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 export const Navbar = () => {
   // const searchInput = (
@@ -54,7 +55,9 @@ export const Navbar = () => {
         <NavbarBrand className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             {/* <Logo /> */}
-            <p className="font-akira font-bold text-secondary-500 dark:text-secondary-700">Symphony</p>
+            <p className="font-akira font-bold text-secondary-500 dark:text-secondary-700">
+              Symphony
+            </p>
           </NextLink>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
@@ -63,7 +66,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground", underline: "hover" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium text-xs font-akira"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium text-xs font-akira",
                 )}
                 color="foreground"
                 href={item.href}
@@ -84,6 +87,7 @@ export const Navbar = () => {
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
+          <DynamicWidget />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
       </NavbarContent>
@@ -97,6 +101,10 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
+        <div className="mt-3">
+          <DynamicWidget />
+        </div>
+
         {/* {searchInput} */}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (

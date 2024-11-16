@@ -9,6 +9,8 @@
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
 	},
 	"dependencies": {
+		"@dynamic-labs/ethereum": "^3.6.3",
+		"@dynamic-labs/sdk-react-core": "^3.6.3",
 		"@formkit/auto-animate": "^0.8.2",
 		"@nextui-org/button": "2.0.38",
 		"@nextui-org/card": "^2.0.34",
@@ -41,7 +43,8 @@
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"sonner": "^1.7.0",
-		"uuid": "^11.0.3"
+		"uuid": "^11.0.3",
+		"viem": "^2.21.45"
 	},
 	"devDependencies": {
 		"@tanstack/eslint-plugin-query": "^5.60.1",
