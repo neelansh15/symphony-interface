@@ -21,8 +21,8 @@ import { PlayIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-enum StatusColor {
-  IDLE = "gray",
+enum JobStatusColor {
+  SUBMITTED = "gray",
   RUNNING = "blue",
   COMPLETED = "green",
   FAILED = "red",
@@ -51,7 +51,7 @@ export default function WorkflowsPage() {
       setIsSubmittingJob((prev) => ({ ...prev, [id]: true }));
       await createJob({
         flow_id: Number(id),
-        status: "SUBMITTED"
+        status: "SUBMITTED",
       });
       setIsSubmittingJob((prev) => ({ ...prev, [id]: false }));
 
@@ -61,6 +61,21 @@ export default function WorkflowsPage() {
       setIsSubmittingJob((prev) => ({ ...prev, [id]: false }));
       console.error("Error creating job", error);
       toast.error("Error creating job");
+    }
+  };
+
+  const getJobStatusColor = (jobStatus?: string) => {
+    switch (jobStatus) {
+      case "SUBMITTED":
+        return "text-gray-500";
+      case "RUNNING":
+        return "text-blue-500";
+      case "COMPLETED":
+        return "text-green-500";
+      case "FAILED":
+        return "text-red-500";
+      default:
+        return "text-gray-500";
     }
   };
 
@@ -132,7 +147,9 @@ export default function WorkflowsPage() {
                   <TableCell>{job.id}</TableCell>
                   <TableCell>{job.flow_id}</TableCell>
                   <TableCell>{job.created_at || "-"}</TableCell>
-                  <TableCell>{job.status}</TableCell>
+                  <TableCell className={clsx(getJobStatusColor(job.status))}>
+                    {job.status}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (

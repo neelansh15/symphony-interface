@@ -154,7 +154,7 @@ export default function RegisterBlocksPage() {
           </section>
 
           <section className="mt-10">
-            <h2 className="text-xl font-bold mb-4">Input Schema</h2>
+            <h2 className="text-xl font-bold mb-4">Input Format</h2>
             <div ref={parent0}>
               {formData.params.inputSchema.map((input, index) => (
                 <div key={index} className="flex gap-4 mb-4">
@@ -199,7 +199,7 @@ export default function RegisterBlocksPage() {
               Add Input Parameter
             </Button>
 
-            <h2 className="text-xl font-bold mb-4 mt-8">Output Schema</h2>
+            <h2 className="text-xl font-bold mb-4 mt-8">Output Format</h2>
             <div ref={parent1}>
               {formData.params.outputSchema.map((output, index) => (
                 <div key={index} className="flex gap-4 mb-4">
