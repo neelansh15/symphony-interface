@@ -125,7 +125,7 @@ export default function CreatePage() {
                 <>
                   <BlockCard
                     key={block.id + i}
-                    blockId={block.blockId}
+                    block={block}
                     // w-screen here due to some weird behaviour when using autoanimate
                     className="mt-5 w-screen"
                     onDismiss={handleRemoveBlock(i)}
