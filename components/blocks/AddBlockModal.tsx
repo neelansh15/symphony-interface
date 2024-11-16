@@ -25,11 +25,14 @@ export const AddBlockModal = ({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <ModalContent>
+      <ModalContent className="top-gradient">
         {(onClose) => (
           <>
-            <ModalHeader>Add to Workflow</ModalHeader>
-          <ModalBody className="pb-6 max-h-96 overflow-y-auto">
+            <ModalHeader className="mt-1 flex flex-col">
+              <p className="text-xs text-secondary-500 font-bold">BLOCK</p>
+              <p>Add to Workflow</p>
+            </ModalHeader>
+            <ModalBody className="pb-6 max-h-96 overflow-y-auto">
               {blocksList &&
                 blocksList.map((block) => (
                   <Button

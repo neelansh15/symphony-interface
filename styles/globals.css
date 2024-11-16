@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 .top-gradient {
-    background-image: radial-gradient(circle at top, red 1, transparent 0);
+  background-image: radial-gradient(
+    circle at center 10px,
+    hsl(var(--nextui-default-100)) 10%,
+    hsl(var(--nextui-default-50))
+  );
 }

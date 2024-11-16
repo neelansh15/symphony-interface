@@ -1,11 +1,11 @@
 import { blocks } from "@/config/blocks";
 import { useCurrentWorkflow } from "@/hooks/useCurrentWorkflow";
-import { firstLetterToUpperCase, getBlockById } from "@/utils";
+import { firstLetterToUpperCase } from "@/utils";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
+import { Chip } from "@nextui-org/chip";
 import { Input } from "@nextui-org/input";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
-import { PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface EditBlockModalProps {
@@ -14,9 +14,6 @@ interface EditBlockModalProps {
   isOpen?: boolean;
 
   onOpenChange?: (isOpen: boolean) => void;
-
-  // Need this here to show tokens from previous block's outputs
-  previousBlockId?: string;
 }
 
 export const EditBlockModal = ({
@@ -34,7 +31,12 @@ export const EditBlockModal = ({
 
   const [localParams, setLocalParams] = useState<Param[]>(initialParams);
 
-  console.log("Local Params and Selected Block", localParams, selectedBlock);
+  // Find previous block if it exists
+  const previousBlock = wf?.blocks?.find((_, index, arr) => {
+    const currentBlockIndex = arr.findIndex((b) => b.id === selectedBlock.id);
+    return index === currentBlockIndex - 1;
+  });
+  const previousBlockOutput = previousBlock?.output || [];
 
   const handleSave = (): void => {
     if (!wf || !wf.blocks) return;
@@ -61,7 +63,7 @@ export const EditBlockModal = ({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <ModalContent>
+      <ModalContent className="top-gradient">
         {() => (
           <>
             <ModalHeader className="pt-4 flex-col">
@@ -71,19 +73,47 @@ export const EditBlockModal = ({
               </p>
             </ModalHeader>
             <ModalBody className="pb-6">
+              {previousBlockOutput.length > 0 && (
+                <div>
+                  <p className="text-sm mb-2">
+                    <span className="font-semibold">
+                      Available variables from previous block.
+                    </span>
+                    <br />
+                    <span className="text-gray-300">
+                      Use &#123;&#123;variableName &#125;&#125; to access inside
+                      the input fields
+                    </span>
+                  </p>
+                  {previousBlockOutput.map((param) => (
+                    <Chip
+                      color="default"
+                      size="sm"
+                      key={param.name}
+                      className="mr-2 mb-2"
+                    >
+                      {param.name}
+                    </Chip>
+                  ))}
+                </div>
+              )}
               <Card fullWidth>
                 <CardBody className="max-h-96 overflow-y-auto">
                   {localParams.map((param) => (
                     <Input
                       key={param.name}
-                      label={firstLetterToUpperCase(param.label || param.name)}
+                      label={firstLetterToUpperCase(
+                        param.label || param.name || "",
+                      )}
                       description={firstLetterToUpperCase(
-                        param.type === "string" ? "text" : param.type,
+                        param.type === "string" ? "text" : param.type || "",
                       )}
                       type="text"
                       className="mt-1 mb-1"
                       value={param.value?.toString() || ""}
-                      onChange={(e) => handleChange(param.name, e.target.value)}
+                      onChange={(e) =>
+                        handleChange(param.name || "", e.target.value)
+                      }
                     />
                   ))}
                 </CardBody>
