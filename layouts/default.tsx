@@ -5,7 +5,6 @@ import { Head } from "./head";
 import { Navbar } from "@/components/navbar";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
-import { Akira } from "@/fonts";
 
 export default function DefaultLayout({
   children,

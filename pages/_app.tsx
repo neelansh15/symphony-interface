@@ -14,14 +14,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const queryClient = new QueryClient();
 
-  const { theme } = useTheme();
-
   return (
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class">
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
-          <Toaster theme={theme === "dark" ? "dark" : "light"} />
+          <Toaster theme="dark" />
         </QueryClientProvider>
       </NextThemesProvider>
     </NextUIProvider>

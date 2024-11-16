@@ -10,7 +10,7 @@ import DefaultLayout from "@/layouts/default";
 import { Lobster } from "next/font/google";
 import clsx from "clsx";
 import { PlusIcon } from "lucide-react";
-import { lobster } from "@/fonts";
+import { lobster } from "@/config/fonts";
 
 export default function IndexPage() {
   return (
