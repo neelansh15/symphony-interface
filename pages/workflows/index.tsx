@@ -49,6 +49,7 @@ export default function WorkflowsPage() {
       <section className="mt-5">
         <Table aria-label="Your Workflows">
           <TableHeader>
+            <TableColumn>ID</TableColumn>
             <TableColumn>NAME</TableColumn>
             {/* <TableColumn>DESCRIPTION</TableColumn> */}
             <TableColumn>STATUS</TableColumn>
@@ -57,8 +58,9 @@ export default function WorkflowsPage() {
             {wfs && !isLoading ? (
               wfs.map((wfs) => (
                 <TableRow key={wfs.name}>
+                  {/* @ts-ignore */}
+                  <TableCell>{wfs.id}</TableCell>
                   <TableCell>{wfs.name}</TableCell>
-                  {/* <TableCell>{wfs.description || "-"}</TableCell> */}
                   <TableCell>
                     <div className="flex justify-between items-center">
                       <p className={clsx()}>Idle</p>
@@ -74,13 +76,14 @@ export default function WorkflowsPage() {
                 <TableCell>
                   {isLoading ? "Loading workflows..." : "No workflows found"}
                 </TableCell>
-                {/* <TableCell> </TableCell> */}
+                <TableCell> </TableCell>
                 <TableCell> </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
 
+        <h2 className="mt-10 font-bold text-4xl text-cyan-950 dark:text-cyan-100">Jobs</h2>
         <Table aria-label="Your Workflows" className="mt-5">
           <TableHeader>
             <TableColumn>JOB ID</TableColumn>
