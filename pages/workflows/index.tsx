@@ -78,8 +78,7 @@ export default function WorkflowsPage() {
           <TableHeader>
             <TableColumn>ID</TableColumn>
             <TableColumn>NAME</TableColumn>
-            {/* <TableColumn>DESCRIPTION</TableColumn> */}
-            <TableColumn>STATUS</TableColumn>
+            <TableColumn>DESCRIPTION</TableColumn>
           </TableHeader>
           <TableBody>
             {wfs && !isLoading ? (
@@ -90,7 +89,7 @@ export default function WorkflowsPage() {
                   <TableCell>{wfs.name}</TableCell>
                   <TableCell>
                     <div className="flex justify-between items-center">
-                      <p className={clsx()}>Idle</p>
+                      <span>{wfs.description || "-"}</span>
                       <Button
                         onClick={() => handleRunWorkflow(wfs.id)}
                         color="primary"
