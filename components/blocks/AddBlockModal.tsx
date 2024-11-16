@@ -23,7 +23,7 @@ export const AddBlockModal = ({
   onOpenChange,
   onAddBlock,
 }: AddBlockModalProps) => {
-  const { data: blocksList } = useAllBlocks();
+  const { data: blocksList, isLoading } = useAllBlocks();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredBlocks = blocksList?.filter((block) => {
@@ -61,6 +61,7 @@ export const AddBlockModal = ({
               />
             </ModalHeader>
             <ModalBody className="pb-6 max-h-96 overflow-y-auto">
+              {isLoading && <p>Loading...</p>}
               {filteredBlocks &&
                 filteredBlocks.map((block) => (
                   <Button
