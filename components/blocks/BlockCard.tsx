@@ -29,7 +29,7 @@ export const BlockCard = ({
     >
       <CardBody>
         <div className="flex justify-between items-center">
-          <p className="font-bold">{block.name || block.id}</p>
+          <p className="font-bold font-akira">{block.name || block.id}</p>
           <div className="flex items-center space-x-2">
             <Button variant="light" onClick={onEditClick} isIconOnly>
               <EditIcon width={18} />

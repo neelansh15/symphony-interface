@@ -1,9 +1,11 @@
 import { blocks } from "@/config/blocks";
+import { lobster } from "@/fonts";
 import { useAllBlocks } from "@/hooks/useAllBlocks";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
+import clsx from "clsx";
 import { PlusIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -40,8 +42,12 @@ export const AddBlockModal = ({
         {(onClose) => (
           <>
             <ModalHeader className="mt-1 flex flex-col">
-              <p className="text-xs text-secondary-500 font-bold">BLOCK</p>
-              <p>Add to Workflow</p>
+              <p className={clsx("text-xs text-secondary-500 font-bold font-akira")}>
+                BLOCK
+              </p>
+              <h1 className={clsx("font-akira")}>
+                Add to Workflow
+              </h1>
 
               <Input
                 variant="flat"
