@@ -24,7 +24,7 @@ export const BlockCard = ({
   return (
     <Card
       fullWidth
-      className={clsx("max-w-xl border border-default-200", className)}
+      className={clsx("max-w-xl border border-default-200 bg-default-100", className)}
       {...props}
     >
       <CardBody>
