@@ -9,7 +9,11 @@ export const siteConfig = {
       href: "/",
     },
     {
-      label: "Create",
+      label: "Workflows",
+      href: "/workflows",
+    },
+    {
+      label: "Create Workflow",
       href: "/create",
     },
     {
@@ -23,7 +27,11 @@ export const siteConfig = {
       href: "/",
     },
     {
-      label: "Create",
+      label: "Workflows",
+      href: "/workflows",
+    },
+    {
+      label: "Create Workflow",
       href: "/create",
     },
     {
