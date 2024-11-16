@@ -131,7 +131,7 @@ export default function CreatePage() {
       console.error("Error creating workflow", error);
       toast.error("Error creating workflow");
     }
-  }, [wf]);
+  }, [wf, isRecurring, recurringInterval, router]);
 
   useEffect(() => {
     parent.current && autoAnimate(parent.current);

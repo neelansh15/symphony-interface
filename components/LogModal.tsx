@@ -17,12 +17,12 @@ export const LogModal = ({ job }: LogModalProps) => {
 
   return (
     <div>
-      <Button onClick={onOpen} size="sm">
+      <Button variant="flat" onClick={onOpen} size="sm">
         View Logs
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader>Logs for Job {job.id}</ModalHeader>
               <ModalBody
