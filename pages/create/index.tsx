@@ -15,6 +15,8 @@ import { EditBlockModal } from "@/components/blocks/EditBlockModal";
 import autoAnimate from "@formkit/auto-animate";
 import { v4 as uuidv4 } from "uuid";
 import { getBlockById } from "@/utils";
+import { createWorkflow } from "@/utils/api/createWorkflow";
+import { toast } from "sonner";
 
 export default function CreatePage() {
   const parent = useRef(null);
@@ -37,10 +39,6 @@ export default function CreatePage() {
     [setWf],
   );
 
-  const handleCreate = useCallback(() => {
-    console.log("Creating workflow", wf);
-  }, [wf]);
-
   const handleAddBlock = useCallback(
     (blockId: string) => {
       setWf((currentVal) => {
@@ -57,8 +55,6 @@ export default function CreatePage() {
         blocks.push(newBlock);
 
         setSelectedBlock(newBlock);
-
-        console.log("NEW BLOCK", newBlock);
 
         return {
           ...currentVal,
@@ -83,6 +79,25 @@ export default function CreatePage() {
     },
     [setWf],
   );
+
+  const handleCreate = useCallback(async () => {
+    if (!wf) return;
+    try {
+      const workflow = {
+        ...wf,
+        block_sequence: [9], // TODO: Update later if needed
+        block_params: wf.blocks
+          ?.map((b) => b.params)
+          .map((p) => p.map((pp) => pp.value)),
+      };
+      toast.info("Creating workflow...");
+      await createWorkflow(workflow);
+      toast.success("Workflow created successfully");
+    } catch (error) {
+      console.error("Error creating workflow", error);
+      toast.error("Error creating workflow");
+    }
+  }, [wf]);
 
   useEffect(() => {
     parent.current && autoAnimate(parent.current);

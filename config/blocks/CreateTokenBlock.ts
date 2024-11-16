@@ -6,15 +6,23 @@ const createTokenBlock: Block = {
   params: [
     {
       name: "name",
+      label: "Name",
       type: "string",
     },
     {
       name: "symbol",
+      label: "Symbol",
       type: "string",
     },
     {
       name: "supply",
+      label: "Supply",
       type: "number",
+    },
+    {
+      name: "private_key",
+      label: "Private Key",
+      type: "string",
     },
   ],
   input: [
@@ -29,6 +37,10 @@ const createTokenBlock: Block = {
     {
       name: "supply",
       type: "number",
+    },
+    {
+      name: "private_key",
+      type: "string",
     },
   ],
   output: [

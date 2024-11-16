@@ -4,6 +4,7 @@ interface Field {
 }
 
 interface Param extends Field {
+  label?: string;
   value?: string | number;
 }
 
@@ -21,6 +22,6 @@ interface Block {
 
 interface Workflow {
   name?: string;
-  startTimestamp?: number;
+  description?: string;
   blocks?: Block[];
 }

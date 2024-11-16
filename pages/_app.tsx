@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import { fontSans, fontMono } from "@/config/fonts";
 import "@/styles/globals.css";
+import { Toaster } from "sonner";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class">
         <Component {...pageProps} />
+        <Toaster />
       </NextThemesProvider>
     </NextUIProvider>
   );

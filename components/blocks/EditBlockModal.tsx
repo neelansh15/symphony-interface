@@ -62,7 +62,7 @@ export const EditBlockModal = ({
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
-        {(onClose: () => void) => (
+        {() => (
           <>
             <ModalHeader className="pt-4 flex-col">
               <p className="text-sm text-secondary-500">Editing</p>
@@ -76,7 +76,7 @@ export const EditBlockModal = ({
                   {localParams.map((param) => (
                     <Input
                       key={param.name}
-                      label={firstLetterToUpperCase(param.name)}
+                      label={firstLetterToUpperCase(param.label || param.name)}
                       description={firstLetterToUpperCase(
                         param.type === "string" ? "text" : param.type,
                       )}
