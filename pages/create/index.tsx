@@ -19,9 +19,12 @@ import { createWorkflow } from "@/utils/api/workflow";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 
 export default function CreatePage() {
   const parent = useRef(null);
+
+  const router = useRouter();
 
   const { wf, setWf } = useCurrentWorkflow();
 
@@ -104,6 +107,9 @@ export default function CreatePage() {
       toast.info("Creating workflow...");
       await createWorkflow(workflow);
       toast.success("Workflow created successfully");
+
+      // Redirect to workflows page
+      router.push("/workflows");
     } catch (error) {
       console.error("Error creating workflow", error);
       toast.error("Error creating workflow");
@@ -118,7 +124,7 @@ export default function CreatePage() {
     <>
       <DefaultLayout>
         <section>
-          <h1 className="font-akira text-secondary uppercase font-semibold text-sm">
+          <h1 className="text-center font-akira text-secondary uppercase font-semibold text-sm">
             Workflow
           </h1>
 
@@ -129,8 +135,8 @@ export default function CreatePage() {
               onChange={(e) => handleNameChange(e.target.value)}
               value={wf?.name}
               classNames={{
-                inputWrapper: "max-w-fit",
-                input: "text-4xl font-bold font-akira",
+                inputWrapper: "max-w-fit mx-auto",
+                input: "text-4xl font-bold font-akira text-center",
               }}
             />
           </div>
