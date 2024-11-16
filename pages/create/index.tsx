@@ -179,7 +179,7 @@ export default function CreatePage() {
             </div>
 
             <Button
-              className="mt-5 max-w-xl bg-secondary-100 hover:bg-secondary-200 border-2 border-dashed border-secondary-200 min-h-16 backdrop-blur"
+              className="mt-5 max-w-xl font-akira bg-secondary-100 dark:bg-secondary-300 hover:bg-secondary-200 border-2 border-dashed border-secondary-200 min-h-16 backdrop-blur"
               fullWidth
               onClick={onOpen}
             >

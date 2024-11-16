@@ -24,12 +24,15 @@ export const BlockCard = ({
   return (
     <Card
       fullWidth
-      className={clsx("max-w-xl border border-default-200 bg-default-100", className)}
+      className={clsx(
+        "max-w-xl border border-default-200 bg-default-100",
+        className,
+      )}
       {...props}
     >
       <CardBody>
         <div className="flex justify-between items-center">
-          <p className="font-bold font-akira">{block.name || block.id}</p>
+          <h2 className="font-bold font-akira">{block.name || block.id}</h2>
           <div className="flex items-center space-x-2">
             <Button variant="light" onClick={onEditClick} isIconOnly>
               <EditIcon width={18} />
@@ -45,10 +48,12 @@ export const BlockCard = ({
           </div>
         </div>
         <div className="text-secondary-900 font-medium flex flex-wrap gap-1">
-          {block.params.map(
-            (param, i, arr) =>
-              param.value && <Chip size="sm">{param.value}</Chip>,
-          )}
+          {block &&
+            block.params &&
+            block.params.map(
+              (param, i, arr) =>
+                param.value && <Chip size="sm">{param.value}</Chip>,
+            )}
         </div>
       </CardBody>
     </Card>
