@@ -150,20 +150,26 @@ export default function WorkflowsPage() {
           </TableHeader>
           <TableBody>
             {allJobs && allJobs.length > 0 && !isJobsLoading ? (
-              allJobs.map((job) => (
-                <TableRow key={job.id}>
-                  <TableCell>{job.id}</TableCell>
-                  <TableCell>{getWorkflowName(job.flow_id)}</TableCell>
-                  <TableCell>
-                    {job.created_at
-                      ? new Date(job.created_at).toLocaleString()
-                      : "-"}
-                  </TableCell>
-                  <TableCell className={clsx(getJobStatusColor(job.status))}>
-                    {job.status}
-                  </TableCell>
-                </TableRow>
-              ))
+              allJobs
+                .toSorted(
+                  (a, b) =>
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime(),
+                )
+                .map((job) => (
+                  <TableRow key={job.id}>
+                    <TableCell>{job.id}</TableCell>
+                    <TableCell>{getWorkflowName(job.flow_id)}</TableCell>
+                    <TableCell>
+                      {job.created_at
+                        ? new Date(job.created_at).toLocaleString()
+                        : "-"}
+                    </TableCell>
+                    <TableCell className={clsx(getJobStatusColor(job.status))}>
+                      {job.status}
+                    </TableCell>
+                  </TableRow>
+                ))
             ) : (
               <TableRow>
                 <TableCell>
