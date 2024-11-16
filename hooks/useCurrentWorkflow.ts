@@ -3,6 +3,7 @@ import { atom, useAtom } from "jotai";
 import { useCallback } from "react";
 
 const currentWorkflowAtom = atom<Workflow | undefined>({
+  id: "default",
   name: "Workflow Name",
 });
 

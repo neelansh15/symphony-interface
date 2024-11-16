@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from "uuid";
 import { getBlockById } from "@/utils";
 import { createWorkflow } from "@/utils/api/workflow";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
+import clsx from "clsx";
 
 export default function CreatePage() {
   const parent = useRef(null);
@@ -31,6 +33,8 @@ export default function CreatePage() {
   } = useDisclosure();
 
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
+
+  const { theme } = useTheme();
 
   const handleNameChange = useCallback(
     (value: string) => {
@@ -131,11 +135,18 @@ export default function CreatePage() {
             />
           </div>
 
-          <div className="workflow-background mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1">
+          <div
+            className={clsx(
+              "mt-5 min-h-[60vh] p-6 rounded-xl border border-gray-200 dark:border-content4 flex flex-col items-center bg-gray-100 dark:bg-content1",
+              theme === "dark"
+                ? "workflow-background-dark"
+                : "workflow-background",
+            )}
+          >
             <div ref={parent}>
               {(!wf || !wf.blocks || wf?.blocks?.length === 0) && (
                 <Card
-                  className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base w-screen"
+                  className="text-gray-500 max-w-xl min-h-24 text-sm md:text-base md:w-screen"
                   fullWidth
                 >
                   <CardBody className="flex justify-center items-center ">
@@ -149,7 +160,7 @@ export default function CreatePage() {
                     key={block.id.toString() + i}
                     block={block}
                     // w-screen here due to some weird behaviour when using autoanimate
-                    className="mt-5 w-screen"
+                    className="mt-5 md:w-screen"
                     onDismiss={handleRemoveBlock(i)}
                     onEditClick={() => {
                       setSelectedBlock(block);

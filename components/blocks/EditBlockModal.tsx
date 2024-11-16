@@ -77,7 +77,7 @@ export const EditBlockModal = ({
                 <div>
                   <p className="text-sm mb-2">
                     <span className="font-semibold">
-                      Available variables from previous block.
+                      Available results from previous block.
                     </span>
                     <br />
                     <span className="text-gray-500 dark:text-gray-300">
