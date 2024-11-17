@@ -107,7 +107,9 @@ export default function WorkflowsPage() {
           </TableHeader>
           <TableBody>
             {wfs && !isLoading ? (
-              wfs.map((wfs) => (
+              wfs
+              .toSorted((a, b) => +b.id - +a.id)
+              .map((wfs) => (
                 <TableRow key={wfs.name}>
                   {/* @ts-ignore */}
                   <TableCell>{wfs.id}</TableCell>

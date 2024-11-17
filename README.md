@@ -1,3 +1,10 @@
+# Symphony Interface
+
+A NextJS webapp made for the symphony interface.  
+
+Github Organization Link: https://github.com/SymphonyStack  
+Backend Link: https://github.com/SymphonyStack/SymphonyBackend
+
 # Next.js & NextUI Template
 
 This is a template for creating applications using Next.js 14 (pages directory) and NextUI (v2).
